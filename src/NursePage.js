@@ -20,7 +20,7 @@ function NursePage() {
     // Function to fetch patient data
     const fetchPatientData = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/process_data'); // Adjust the endpoint to match your Flask route
+        const response = await axios.get('http://localhost:5000/patients'); // Adjust the endpoint to match your Flask route
         const data = response.data;
         setPatientList(data);
       } catch (error) {
