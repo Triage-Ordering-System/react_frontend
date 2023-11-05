@@ -49,7 +49,7 @@ function PatientPage() {
           severity: selectedSeverity,
         };
 
-        axios.post('https://localhost:3000', data)
+        axios.post('http://localhost:5000/process_data', data)
       .then(response => {
         // Handle the response from the server if needed
         console.log('Data sent successfully', response.data);
