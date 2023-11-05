@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { BrowserRouter as Router, Link, useNavigate } from 'react-router-dom';
+
 
 function PatientPage() {
   const [isSymptomDropdownOpen, setSymptomDropdownOpen] = useState(false);
@@ -10,11 +12,17 @@ function PatientPage() {
   const [name, setName] = useState('');
   const [age, setAge] = useState(0);
   const [history, setHistory] = useState('');
+  const [showContent, setShowContent] = useState(true);
+  const navigate = useNavigate();
 
   
+  const nurseView = () => {
+    navigate(`/NursePage`);
+  };
 
-
-
+  const toggleSubmit = () => {
+    setShowContent(false);
+  };
   const toggleSymptomDropdown = () => {
     setSymptomDropdownOpen(!isSymptomDropdownOpen);
     
@@ -45,6 +53,7 @@ function PatientPage() {
 
       const sendDataToBackend = () => {
         // Define the data to send
+        setShowContent(false)
         const data = {
           name: name,
           age: age,
@@ -68,7 +77,10 @@ function PatientPage() {
 
   return (
     <div className="patient-page">
-    
+        <div><button onClick={nurseView} className="view-swap">Nurse View</button></div>
+        {showContent && (
+            <div>
+
       <h1>Patient Page</h1>
       <h2>Name</h2>
       <input
@@ -95,8 +107,9 @@ function PatientPage() {
         onChange={handleAgeChange}
       />
       
-      {!closeAddSymptom && (<div className="symptom-bar" onClick={toggleSymptomDropdown} >
+      {!closeAddSymptom && !isSymptomDropdownOpen &&  (<div className="symptom-bar" onClick={toggleSymptomDropdown} >
         Add Symptom
+
       </div> 
       )}
       {isSymptomDropdownOpen && (
@@ -246,6 +259,13 @@ function PatientPage() {
         </button>
         </div>
         <button onClick={sendDataToBackend}> Submit </button>
+        </div>
+        )}
+    {!showContent && (
+            <div>
+                <h1 classname="End" >Your response has been submitted, please wait for your name to be called.</h1>
+                </div>)}
+
     </div>
   );
 }
