@@ -9,6 +9,7 @@ function PatientPage() {
   const [closeAddSymptom, setCloseSymptom] = useState(false);
   const [name, setName] = useState('');
   const [age, setAge] = useState(0);
+  const [history, setHistory] = useState('');
 
   
 
@@ -33,11 +34,14 @@ function PatientPage() {
     };
     const handleNameChange = (event) => {
         setName(event.target.value);
-      };
+    };
     
-      const handleAgeChange = (event) => {
+    const handleAgeChange = (event) => {
         setAge(event.target.value);
-      };
+    };
+    const handleHistoryChange = (event) => {
+        setHistory(event.target.value);
+    };
 
       const sendDataToBackend = () => {
         // Define the data to send
@@ -47,6 +51,7 @@ function PatientPage() {
           symptom_name: selectedButtonName,
           time: selectedTime,
           severity: selectedSeverity,
+          patient_history: history,
         };
 
         axios.post('http://localhost:5000/process_data', data)
@@ -73,7 +78,15 @@ function PatientPage() {
         className="name-input"
         onChange={handleNameChange}
       />
-      <h2>Age</h2>
+      <h2>Patient History</h2>
+      <input
+        type="text"
+        placeholder="Enter all previous illness' and other notable injuries"
+        value={history}
+        className="name-input"
+        onChange={handleNameChange}
+      />
+      <h3>Age</h3>
       <input
         type="number"
         placeholder="Enter Age Here"
@@ -81,6 +94,7 @@ function PatientPage() {
         className="age-input"
         onChange={handleAgeChange}
       />
+      
       {!closeAddSymptom && (<div className="symptom-bar" onClick={toggleSymptomDropdown} >
         Add Symptom
       </div> 
